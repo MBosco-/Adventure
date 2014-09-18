@@ -1,0 +1,19 @@
+/* Copyright (C) Michael Bosco - All Rights Reserved
+ * Unauthorized copying of this repository, and any contained asset, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Michael Bosco <michael.bosco@gmail.com>, September 2014
+ */
+
+
+References for developers:
+
+Python 3.4.1 docs:
+https://docs.python.org/3.4/index.html#
+
+MongoDB 2.6 docs:
+http://docs.mongodb.org/manual/
+
+TTD Methodology explained:
+http://en.wikipedia.org/wiki/Test-driven_development
+
+Packages used include:
