@@ -16,6 +16,13 @@ class World:
 		for j in range(self.height):
 			self.worldMap[j] = numpy.arange(self.width)
 
+		#for each element in self.worldMap[][], generate an Area() at that location
+		iter = 0
+		for j in self.worldMap:
+			for k in range(self.width):
+				j[k] = Area(iter, k)
+			iter = iter + 1
+
 class Area:
 	def __init__(self, x_loc, y_loc):
 		self.x_loc = x_loc + 1
@@ -23,7 +30,13 @@ class Area:
 		#Set the bitmap that we're going to draw at location x,y
 		#self.imagery = QBitmap.__init__()
 		self.image = QtGui.QImage(QtGui.QImage.Format_ARGB32)
-		self.image.load(r'..\Assets\Images\tim.bmp')
+
+		#Roll for yee
+		roll = numpy.random.randint(0,21)
+		if roll < 7:
+			self.image.load(r'..\Assets\Images\yee.bmp')
+		else:
+			self.image.load(r'..\Assets\Images\tim.bmp')
 
 		self.label = QtGui.QLabel('')
 		self.label.setPixmap(QtGui.QPixmap.fromImage(self.image))
@@ -42,14 +55,14 @@ class MainWindow(QtGui.QWidget):
 
 		'''World generation'''
 		#instantiate a world object with x by y dimensions
-		world = World(10,10)
+		world = World(8,8)
 
 		#eventually, we'll be pulling the viewport here, but for now display entire world
+		#display only the first 5x5 of the world.worldMap
 
-		for j in range(world.height):
-			for i in range(world.width):
-				area = Area(world.worldMap[j][j], world.worldMap[j][i])
-				layout.addWidget(area.label, area.x_loc, area.y_loc)
+		for j in range(5):
+			for i in range(5):
+				layout.addWidget(world.worldMap[j][i].label, world.worldMap[j][i].x_loc, world.worldMap[j][i].y_loc)
 
 		'''Display mainWindow'''
 		#Show it
