@@ -2,13 +2,22 @@
 
 import sys
 from PyQt4 import QtGui, QtCore
-from numpy import *
+import numpy
 import os
+
+class World:
+	def __init__(self, width, height):
+		self.width = width
+		self.height = height
+
+		self.worldMap = numpy.empty((self.width, self.height), dtype='object')
+		for j in range(self.height):
+			self.worldMap[j] = numpy.arange(self.width)
 
 class Area:
 	def __init__(self, x_loc, y_loc):
-		self.x_loc = x_loc
-		self.y_loc = y_loc
+		self.x_loc = x_loc + 1
+		self.y_loc = y_loc + 1
 		#Set the bitmap that we're going to draw at location x,y
 		#self.imagery = QBitmap.__init__()
 		self.image = QtGui.QImage(QtGui.QImage.Format_ARGB32)
@@ -24,19 +33,23 @@ class MainWindow(QtGui.QWidget):
 		self.initUI()
 
 	def initUI(self):
+		'''Create the layout itself for the mainWindow'''
 		#Create a "layout", into which we draw, and tell it to use it
 		layout = QtGui.QGridLayout(self)
 		self.setLayout(layout)
 
-		#this will eventually be a call to find what Areas need displayed
-		#for now, instantiate a 5x5 array matrix
-		currentDisplayed = [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]]
+		'''World generation'''
+		#instantiate a world object with x by y dimensions
+		world = World(10,10)
 
-		for j in range(len(currentDisplayed)):
-			for i in range(len(currentDisplayed)):
-				area = Area(currentDisplayed[j][j], currentDisplayed[j][i])
+		#eventually, we'll be pulling the viewport here, but for now display entire world
+
+		for j in range(world.height):
+			for i in range(world.width):
+				area = Area(world.worldMap[j][j], world.worldMap[j][i])
 				layout.addWidget(area.label, area.x_loc, area.y_loc)
 
+		'''Display mainWindow'''
 		#Show it
 		self.setGeometry(300, 300, 355, 280)
 		self.setWindowTitle("Chechnya Adventure!")
