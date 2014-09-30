@@ -10,6 +10,8 @@ class World:
 		self.width = width
 		self.height = height
 
+		#Initialize the worldMap 2d array. IMPORTANT. Must allow dtype='object' to allow
+		#the array to store arrays
 		self.worldMap = numpy.empty((self.width, self.height), dtype='object')
 		for j in range(self.height):
 			self.worldMap[j] = numpy.arange(self.width)
